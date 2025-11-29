@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Leaderboard } from "./components/Leaderboard";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    return (
+        <div
+            style={{
+                minHeight: "100vh",
+                margin: 0,
+                padding: "24px",
+                background: "radial-gradient(circle at top, #1f1f1f 0, #000 55%, #000 100%)",
+                boxSizing: "border-box",
+            }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+            <Leaderboard />
+        </div>
+    );
 }
 
 export default App;

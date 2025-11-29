@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/revatTeamBoard/static/js/main.1a801ed1.js",
+    "static/media/dasha2.png": "/revatTeamBoard/static/media/dasha2.cb63c39fcb38af58ce27.png",
+    "static/media/revatLogo.png": "/revatTeamBoard/static/media/revatLogo.c4f5a33d4662f545bb86.png",
+    "index.html": "/revatTeamBoard/index.html",
+    "main.1a801ed1.js.map": "/revatTeamBoard/static/js/main.1a801ed1.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.1a801ed1.js"
+  ]
+}

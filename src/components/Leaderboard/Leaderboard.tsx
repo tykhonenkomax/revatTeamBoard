@@ -37,6 +37,7 @@ export const Leaderboard: React.FC = () => {
                 fontFamily:
                     '-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif',
                 overflow: "hidden",
+                minHeight: "100vh",
             }}
         >
             {/* --- ФОНОВА ДАША --- */}
@@ -47,50 +48,15 @@ export const Leaderboard: React.FC = () => {
                     position: "absolute",
                     left: 0,
                     bottom: 0,
-                    height: "100vh",
+                    height: "95vh",
                     width: "auto",
-                    objectFit: "cover",
-                    transform: "scaleX(-1)", // дзеркально
+                    objectFit: "contain",
+                    transform: "scaleX(-1)",
                     filter: "drop-shadow(0 0 25px #00ffff90)",
-                    opacity: 0.50, // прозора, щоб не перебивала контент
+                    opacity: 0.35,
                     zIndex: 0,
                 }}
             />
-
-            {/* HEADER */}
-            <header
-                style={{
-                    marginBottom: 24,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
-                    position: "relative",
-                    zIndex: 1,
-                }}
-            >
-                <img
-                    src={revatLogo}
-                    alt="Revat Gym"
-                    style={{ width: 120, marginBottom: 10 }}
-                />
-                <h1
-                    style={{
-                        margin: 0,
-                        fontSize: 32,
-                        fontWeight: 800,
-                        letterSpacing: "0.06em",
-                        textTransform: "uppercase",
-                        color: "#e32222",
-                    }}
-                >
-                    REVAT ЛІДЕРБОРД
-                </h1>
-                <p style={{ marginTop: 6, fontSize: 14, color: "#d4d4d4" }}>
-                    Ставай кращим разом з нами. Відстежуємо бали, прогрес і лідерів
-                    кожного тренування.
-                </p>
-            </header>
 
             {/* --- ОСНОВНИЙ ЛЕЙАУТ --- */}
             <div
@@ -103,30 +69,67 @@ export const Leaderboard: React.FC = () => {
                     zIndex: 1,
                 }}
             >
-                {/* ЛІВА КОЛОНКА */}
+                {/* ЛІВА КОЛОНКА — лого + текст + тучка (над Дашею) */}
                 <div
                     style={{
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        paddingTop: 24,
-                        paddingBottom: 24,
-                        gap: 16,
+                        justifyContent: "flex-start",
+                        paddingTop: 40,
+                        height: "100vh",
+                        position: "relative",
+                        zIndex: 2,
                     }}
                 >
-                    <div style={{ width: "100%", textAlign: "center" }}>
-                        <TalkingCloud />
+                    {/* Верхній блок з лого та текстом */}
+                    <div
+                        style={{
+                            textAlign: "center",
+                            marginBottom: 24,
+                        }}
+                    >
+                        <img
+                            src={revatLogo}
+                            alt="Revat Gym"
+                            style={{width: 110, marginBottom: 8}}
+                        />
+                        <h1
+                            style={{
+                                margin: 0,
+                                fontSize: 28,
+                                fontWeight: 800,
+                                letterSpacing: "0.06em",
+                                textTransform: "uppercase",
+                                color: "#e32222",
+                            }}
+                        >
+                            REVAT ЛІДЕРБОРД
+                        </h1>
+                        <p style={{marginTop: 6, fontSize: 13, color: "#d4d4d4"}}>
+                            Ставай кращим разом з нами. Відстежуємо бали, прогрес і лідерів
+                            кожного тренування.
+                        </p>
                     </div>
+
+                    {/* Тучка */}
+                    <div style={{width: "100%", textAlign: "center"}}>
+                        <TalkingCloud/>
+                    </div>
+
+                    {/* Нижній пустий простір, щоб контент не ліз на Дашу */}
+                    <div style={{flex: 1}}/>
                 </div>
 
-                {/* СЕРЕДНЯ КОЛОНКА */}
+                {/* СЕРЕДНЯ КОЛОНКА — ДОШКА ЛІДЕРІВ */}
                 <section
                     style={{
-                        background: "rgba(13, 13, 13, 0.5)",   // 🔹 50% прозорий фон
+                        background: "rgba(13, 13, 13, 0.5)",
                         borderRadius: 18,
                         padding: 18,
-                        border: "1px solid rgba(38, 38, 38, 0.8)",
-                        minHeight: 400,
+                        border: "1px solid rgba(38,38,38,0.8)",
+                        height: "calc(100vh - 80px)",
+                        maxHeight: "calc(100vh - 80px)",
                     }}
                 >
                     <div
@@ -136,10 +139,10 @@ export const Leaderboard: React.FC = () => {
                             marginBottom: 12,
                         }}
                     >
-                        <h2 style={{ margin: 0, fontSize: 16, textTransform: "uppercase" }}>
+                        <h2 style={{margin: 0, fontSize: 16, textTransform: "uppercase"}}>
                             Дошка лідерів
                         </h2>
-                        <div style={{ display: "flex", gap: 8 }}>
+                        <div style={{display: "flex", gap: 8}}>
                             {["all", "male", "female"].map((f) => (
                                 <button
                                     key={f}
@@ -174,7 +177,7 @@ export const Leaderboard: React.FC = () => {
                     />
                 </section>
 
-                {/* ПРАВА КОЛОНКА */}
+                {/* ПРАВА КОЛОНКА — форми */}
                 <div
                     style={{
                         display: "flex",
@@ -182,10 +185,10 @@ export const Leaderboard: React.FC = () => {
                         gap: 16,
                     }}
                 >
-                    <AddPointsForm selectedAthlete={selectedAthlete} />
-                    <AddAthleteForm />
-                    <ScoreHistory selectedAthlete={selectedAthlete} />
-                    <ResetLeaderboardButton />
+                    <AddPointsForm selectedAthlete={selectedAthlete}/>
+                    <AddAthleteForm/>
+                    <ScoreHistory selectedAthlete={selectedAthlete}/>
+                    <ResetLeaderboardButton/>
                 </div>
             </div>
         </div>

@@ -54,6 +54,8 @@ export const AddAthleteForm: React.FC = () => {
                 borderRadius: 18,
                 padding: 16,
                 border: "1px solid #262626",
+                maxWidth: 260,         // 🔹 звузили
+                margin: "0 auto",      // 🔹 центрували
             }}
         >
             <h3 style={{ margin: 0, marginBottom: 8, fontSize: 15, color: "#fff" }}>

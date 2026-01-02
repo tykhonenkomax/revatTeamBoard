@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { doc, updateDoc, arrayUnion, increment } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Athlete } from "../../types";
@@ -8,6 +9,8 @@ const POINT_OPTIONS = [
     { label: "Закінчив комплекс 💪", points: 3 },
     { label: "Новий навик 🔥", points: 4 },
     { label: "Лідер дня 🏆", points: 5 },
+    { label: "2 місце дня 🏆", points: 4 },
+    { label: "3 місце дня 🏆", points: 4 },
 ];
 
 export const AddPointsForm: React.FC<{ selectedAthlete?: Athlete }> = ({
@@ -37,24 +40,15 @@ export const AddPointsForm: React.FC<{ selectedAthlete?: Athlete }> = ({
     };
 
     return (
-        <div
-            style={{
-                background: "#0d0d0d",
-                borderRadius: 18,
-                padding: 16,
-                border: "1px solid #262626",
-            }}
-        >
-            <h3 style={{ margin: 0, marginBottom: 8, fontSize: 15, color: "#fff" }}>
-                Додати бали
-            </h3>
-            <div style={{ marginBottom: 8, color: "#aaa", fontSize: 14 }}>
+        <Wrapper>
+            <Title>Додати бали</Title>
+            <Subtitle>
                 {selectedAthlete
                     ? `👤 ${selectedAthlete.name}`
                     : "Оберіть учасника зліва"}
-            </div>
+            </Subtitle>
 
-            <select
+            <Select
                 value={reason.label}
                 onChange={(e) =>
                     setReason(
@@ -62,40 +56,83 @@ export const AddPointsForm: React.FC<{ selectedAthlete?: Athlete }> = ({
                         POINT_OPTIONS[0]
                     )
                 }
-                style={{
-                    width: "100%",
-                    padding: 8,
-                    borderRadius: 8,
-                    background: "#000",
-                    color: "#fff",
-                    border: "1px solid #333",
-                    marginBottom: 8,
-                }}
             >
                 {POINT_OPTIONS.map((r) => (
                     <option key={r.label} value={r.label}>
                         {r.label} (+{r.points})
                     </option>
                 ))}
-            </select>
+            </Select>
 
-            <button
+            <SubmitButton
                 onClick={handleAddPoints}
                 disabled={!selectedAthlete || loading}
-                style={{
-                    width: "100%",
-                    background: "linear-gradient(135deg,#e32222,#ff4b3a)",
-                    border: "none",
-                    padding: 10,
-                    borderRadius: 999,
-                    color: "#fff",
-                    fontWeight: 700,
-                    cursor: loading ? "default" : "pointer",
-                    opacity: !selectedAthlete ? 0.6 : 1,
-                }}
             >
                 {loading ? "Збереження..." : "+ Додати бали"}
-            </button>
-        </div>
+            </SubmitButton>
+        </Wrapper>
     );
 };
+
+/* ===================== STYLES ===================== */
+
+const Wrapper = styled.div`
+    background: #0d0d0d;
+    border-radius: 18px;
+    padding: 16px;
+    border: 1px solid #262626;
+    max-width: 260px;      /* 🔹 звузили */
+    margin-left: auto;     /* 🔹 центрування */
+    margin-right: auto;
+`;
+
+const Title = styled.h3`
+    margin: 0 0 8px 0;
+    font-size: 15px;
+    color: #fff;
+`;
+
+const Subtitle = styled.div`
+    margin-bottom: 8px;
+    color: #aaa;
+    font-size: 14px;
+`;
+
+const Select = styled.select`
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #333;
+    margin-bottom: 8px;
+    font-size: 14px;
+
+    &:focus {
+        outline: none;
+        border-color: #e32222;
+    }
+`;
+
+const SubmitButton = styled.button<{ disabled?: boolean }>`
+    width: 100%;
+    background: linear-gradient(135deg, #e32222, #ff4b3a);
+    border: none;
+    padding: 10px;
+    border-radius: 999px;
+    color: #fff;
+    font-weight: 700;
+    cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+    opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
+    font-size: 14px;
+    transition: transform 0.15s ease, filter 0.15s ease;
+
+    &:hover {
+        ${({ disabled }) =>
+                !disabled &&
+                `
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    `}
+    }
+`;

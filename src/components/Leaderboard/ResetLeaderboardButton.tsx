@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { collection, getDocs, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -40,75 +41,86 @@ export const ResetLeaderboardButton: React.FC = () => {
     };
 
     return (
-        <div
-            style={{
-                marginTop: 8,
-                padding: 12,
-                borderRadius: 12,
-                border: "1px solid #3f0000",
-                background: "#1a0000",
-            }}
-        >
-            <p
-                style={{
-                    margin: 0,
-                    marginBottom: 8,
-                    fontSize: 13,
-                    color: "#ffb3b3",
-                }}
-            >
+        <Wrapper>
+            <Warning>
                 ⚠️ Небезпечна дія: повністю очистити лідерборд (видаляються всі учасники і їх фото).
-            </p>
+            </Warning>
 
-            <input
+            <PasswordInput
                 type="password"
                 placeholder="Введи пароль (123)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{
-                    width: "100%",
-                    padding: 8,
-                    borderRadius: 8,
-                    border: "1px solid #803333",
-                    background: "#000",
-                    color: "#fff",
-                    marginBottom: 8,
-                    fontSize: 13,
-                }}
             />
 
-            <button
-                onClick={handleReset}
-                disabled={loading}
-                style={{
-                    width: "100%",
-                    background: "linear-gradient(135deg,#801010,#ff2a2a)",
-                    border: "none",
-                    padding: 10,
-                    borderRadius: 999,
-                    color: "#fff",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    opacity: loading ? 0.6 : 1,
-                    textTransform: "uppercase",
-                    fontSize: 12,
-                    letterSpacing: "0.06em",
-                }}
-            >
+            <ResetButton onClick={handleReset} disabled={loading}>
                 {loading ? "Очищення..." : "Очистити базу"}
-            </button>
+            </ResetButton>
 
-            {message && (
-                <p
-                    style={{
-                        marginTop: 6,
-                        fontSize: 12,
-                        color: message.startsWith("✅") ? "#8dff8d" : "#ff8080",
-                    }}
-                >
-                    {message}
-                </p>
-            )}
-        </div>
+            {message && <Message success={message.startsWith("✅")}>{message}</Message>}
+        </Wrapper>
     );
 };
+
+/* ===================== STYLES ===================== */
+
+const Wrapper = styled.div`
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #3f0000;
+    background: #1a0000;
+    max-width: 260px; /* 🔹 обмежуємо ширину */
+    margin-left: auto;
+    margin-right: auto; /* 🔹 центруємо блок */
+`;
+
+const Warning = styled.p`
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    color: #ffb3b3;
+    text-align: center;
+`;
+
+const PasswordInput = styled.input`
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #803333;
+    background: #000;
+    color: #fff;
+    margin-bottom: 8px;
+    font-size: 13px;
+
+    &:focus {
+        outline: none;
+        border-color: #ff4b3a;
+    }
+`;
+
+const ResetButton = styled.button<{ disabled?: boolean }>`
+    width: 100%;
+    background: linear-gradient(135deg, #801010, #ff2a2a);
+    border: none;
+    padding: 10px;
+    border-radius: 999px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    transition: all 0.25s ease;
+
+    &:hover {
+        filter: brightness(1.1);
+    }
+`;
+
+const Message = styled.p<{ success: boolean }>`
+    margin-top: 6px;
+    font-size: 12px;
+    text-align: center;
+    color: ${({ success }) => (success ? "#8dff8d" : "#ff8080")};
+`;

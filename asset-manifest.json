@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/revatTeamBoard/static/js/main.eb316641.js",
+    "main.js": "/revatTeamBoard/static/js/main.c7492c06.js",
     "static/media/girl.png": "/revatTeamBoard/static/media/girl.dd19e85252ed958c9716.png",
     "static/media/mashinGay.png": "/revatTeamBoard/static/media/mashinGay.9a7446986fcd53cd5542.png",
     "static/media/revatLogo.png": "/revatTeamBoard/static/media/revatLogo.c4f5a33d4662f545bb86.png",
     "index.html": "/revatTeamBoard/index.html",
-    "main.eb316641.js.map": "/revatTeamBoard/static/js/main.eb316641.js.map"
+    "main.c7492c06.js.map": "/revatTeamBoard/static/js/main.c7492c06.js.map"
   },
   "entrypoints": [
-    "static/js/main.eb316641.js"
+    "static/js/main.c7492c06.js"
   ]
 }
